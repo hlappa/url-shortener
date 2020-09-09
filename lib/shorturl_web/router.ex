@@ -23,7 +23,7 @@ defmodule ShorturlWeb.Router do
 
     scope "/" do
       pipe_through :browser
-      live_dashboard "/jotain/dashboard", metrics: ShorturlWeb.Telemetry
+      live_dashboard "/dashboard", metrics: ShorturlWeb.Telemetry
     end
   end
 end
