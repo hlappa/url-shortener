@@ -25,15 +25,22 @@ defmodule ShorturlWeb.LinkController do
   end
 
   def redirect_to(conn, %{"id" => id}) do
-    link = Links.get_link!(id)
-    # TODO: Add async function to update visit count of the link
-    Task.start(fn -> update_visits_for_link(link) end)
-    redirect(conn, external: link.url)
+    try do
+      link = Links.get_link!(id)
+      # Start task for side-effect
+      Task.start(fn -> update_visits_for_link(link) end)
+      redirect(conn, external: link.url)
+    rescue
+      Ecto.NoResultsError ->
+        conn
+        |> put_flash(:error, "Invalid link")
+        |> redirect(to: Routes.link_path(conn, :new))
+    end
   end
 
   def show(conn, %{"id" => id}) do
     link = Links.get_link!(id)
-    domain = System.get_env("APP_DOMAIN") || nil
+    domain = System.get_env("APP_BASE_URL") || nil
     render(conn, "show.html", link: link, domain: domain)
   end
 

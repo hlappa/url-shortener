@@ -1,21 +1,21 @@
-<h1>Show Link</h1>
+<h1>Link information</h1>
 
 <ul>
 
   <li>
-    <strong>Original url:</strong>
+    <h4>Shortened url</h4>
+    <input class="copy-field" value=<%= @domain %>/<%= @link.id %> readonly></input><br>
+  </li>
+
+  <li>
+    <h4>Original url</h4>
     <%= @link.url %>
   </li>
 
   <li>
-    <strong>Shortened url:</strong>
-    <%= @domain %>/<%= @link.id %>
-  </li>
-
-  <li>
-    <strong>Visits:</strong>
+    <h4>Visits</h4>
     <%= @link.visits %>
   </li>
 
-  <%= link("Create new link!", to: "/") %>
+  <%= link("Create another!", to: "/") %>
 </ul>
