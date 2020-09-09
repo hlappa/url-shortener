@@ -1,0 +1,21 @@
+<h1>Show Link</h1>
+
+<ul>
+
+  <li>
+    <strong>Original url:</strong>
+    <%= @link.url %>
+  </li>
+
+  <li>
+    <strong>Shortened url:</strong>
+    <%= @domain %>/<%= @link.id %>
+  </li>
+
+  <li>
+    <strong>Visits:</strong>
+    <%= @link.visits %>
+  </li>
+
+  <%= link("Create new link!", to: "/") %>
+</ul>

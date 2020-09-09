@@ -1,4 +1,4 @@
-version: '3.6'
+version: '3.2'
 services:
   db:
     environment:
@@ -21,7 +21,9 @@ services:
     ports:
       - '4000:4000'
     volumes:
-      - .:/app
+      - type: bind
+        source: .
+        target: /app
 volumes:
   pgdata:
   app:

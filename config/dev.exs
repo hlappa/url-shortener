@@ -4,7 +4,7 @@ database_url = System.get_env("DATABASE_URL")
 
 # Configure your database
 config :shorturl, Shorturl.Repo,
-  url: database_url,
+  url: String.replace(database_url, "?", "dev"),
   pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
@@ -34,10 +34,11 @@ config :shorturl, ShorturlWeb.Endpoint,
 config :shorturl, ShorturlWeb.Endpoint,
   live_reload: [
     patterns: [
-      ~r"priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$",
+      ~r"priv/static/.*(js|css|png|jpeg|jpg|gif|svg|scss)$",
       ~r"priv/gettext/.*(po)$",
+      ~r"lib/shorturl/.*(ex)$",
       ~r"lib/shorturl_web/(live|views)/.*(ex)$",
-      ~r"lib/shorturl_web/templates/.*(eex)$"
+      ~r"lib/shorturl_web/templates/*/.*(eex)$"
     ]
   ]
 
