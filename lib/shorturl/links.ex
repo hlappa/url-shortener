@@ -60,7 +60,7 @@ defmodule Shorturl.Links do
   end
 
   def delete_all_old() do
-    from(l in Link, where: l.updated_at > ago(7, "day")) |> Repo.delete_all()
+    from(l in Link, where: l.updated_at < ago(7, "day")) |> Repo.delete_all()
   end
 
   @doc """
