@@ -26,6 +26,12 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
+config :shorturl, Shorturl.Scheduler,
+  jobs: [
+    # Every minute
+    {"@daily", {Shorturl.Clean, :delete_old_links, []}}
+  ]
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"

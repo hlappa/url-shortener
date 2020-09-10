@@ -88,6 +88,10 @@ defmodule Shorturl.Links do
     Repo.delete(link)
   end
 
+  def delete_all_old() do
+    from(l in Link, where: l.updated_at > ago(7, "day")) |> Repo.delete_all()
+  end
+
   @doc """
   Returns an `%Ecto.Changeset{}` for tracking link changes.
 

@@ -14,9 +14,10 @@ defmodule Shorturl.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: Shorturl.PubSub},
       # Start the Endpoint (http/https)
-      ShorturlWeb.Endpoint
+      ShorturlWeb.Endpoint,
       # Start a worker by calling: Shorturl.Worker.start_link(arg)
       # {Shorturl.Worker, arg}
+      Shorturl.Scheduler
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
