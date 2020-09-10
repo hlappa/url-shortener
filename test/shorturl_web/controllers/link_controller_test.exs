@@ -3,7 +3,7 @@ defmodule ShorturlWeb.LinkControllerTest do
 
   alias Shorturl.Links
 
-  @create_attrs %{id: "dkljd34g", url: "some url", visits: 42}
+  @create_attrs %{id: "dkljd34g", url: "https://domain.com"}
   @invalid_attrs %{url: nil, visits: nil}
 
   def fixture(:link) do
@@ -14,7 +14,7 @@ defmodule ShorturlWeb.LinkControllerTest do
   describe "new link" do
     test "renders form", %{conn: conn} do
       conn = get(conn, Routes.link_path(conn, :new))
-      assert html_response(conn, 200) =~ "New Link"
+      assert html_response(conn, 200) =~ "Short Link"
     end
   end
 
@@ -26,12 +26,12 @@ defmodule ShorturlWeb.LinkControllerTest do
       assert redirected_to(conn) == Routes.link_path(conn, :show, "dkljd34g")
 
       conn = get(conn, Routes.link_path(conn, :show, "dkljd34g"))
-      assert html_response(conn, 200) =~ "Show Link"
+      assert html_response(conn, 200) =~ "Link information"
     end
 
     test "renders errors when data is invalid", %{conn: conn} do
       conn = post(conn, Routes.link_path(conn, :create), link: @invalid_attrs)
-      assert html_response(conn, 200) =~ "New Link"
+      assert html_response(conn, 200) =~ "Short Link"
     end
   end
 
