@@ -39,9 +39,16 @@ defmodule ShorturlWeb.LinkController do
   end
 
   def show(conn, %{"id" => id}) do
-    link = Links.get_link!(id)
-    domain = System.get_env("APP_BASE_URL") || nil
-    render(conn, "show.html", link: link, domain: domain)
+    try do
+      link = Links.get_link!(id)
+      domain = System.get_env("APP_BASE_URL") || nil
+      render(conn, "show.html", link: link, domain: domain)
+    rescue
+      Ecto.NoResultsError ->
+        conn
+        |> put_flash(:error, "Invalid link")
+        |> redirect(to: Routes.link_path(conn, :new))
+    end
   end
 
   defp update_visits_for_link(link) do
