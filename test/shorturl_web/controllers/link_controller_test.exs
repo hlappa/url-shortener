@@ -35,8 +35,10 @@ defmodule ShorturlWeb.LinkControllerTest do
     end
   end
 
-  defp create_link(_) do
-    link = fixture(:link)
-    %{link: link}
+  describe "shortened url" do
+    test "redirects to original url", %{conn: conn} do
+      conn = get(conn, Routes.link_path(conn, :redirect_to, "dkljd34g"))
+      assert html_response(conn, 302)
+    end
   end
 end
