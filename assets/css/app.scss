@@ -165,13 +165,16 @@ a:focus {
 }
 
 .invalid-feedback {
-  color: #a94442;
+  color: red;
+  font-weight: 600;
   display: block;
   margin: -1rem 0 2rem;
+  font-size: 2rem;
 }
 
 .alert {
-  color: white;
-  background-color: indianred;
+  color: red;
+  font-weight: 600;
+  background-color: red;
   width: 20rem;
 }

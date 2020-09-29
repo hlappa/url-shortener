@@ -10,16 +10,13 @@ defmodule ShorturlWeb.LinkController do
   end
 
   def create(conn, %{"link" => link_params}) do
-    key = random_string(8)
-    params = Map.put_new(link_params, "id", key)
-
-    case Links.create_link(params) do
+    case create_link(link_params) do
       {:ok, link} ->
         conn
         |> put_flash(:info, "Link created successfully.")
         |> redirect(to: Routes.link_path(conn, :show, link))
 
-      {:error, %Ecto.Changeset{} = changeset} ->
+      {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
   end
@@ -48,6 +45,24 @@ defmodule ShorturlWeb.LinkController do
         conn
         |> put_flash(:error, "Invalid link")
         |> redirect(to: Routes.link_path(conn, :new))
+    end
+  end
+
+  defp create_link(link_params) do
+    key = random_string(8)
+    params = Map.put_new(link_params, "id", key)
+
+    try do
+      case Links.create_link(params) do
+        {:ok, link} ->
+          {:ok, link}
+
+        {:error, %Ecto.Changeset{} = changeset} ->
+          {:error, changeset}
+      end
+    rescue
+      Ecto.ConstraintError ->
+        create_link(params)
     end
   end
 
