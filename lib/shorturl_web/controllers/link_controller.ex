@@ -50,7 +50,7 @@ defmodule ShorturlWeb.LinkController do
 
   defp create_link(link_params) do
     key = random_string(8)
-    params = Map.put_new(link_params, "id", key)
+    params = Map.put(link_params, "id", key)
 
     try do
       case Links.create_link(params) do
